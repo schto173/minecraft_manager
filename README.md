@@ -3,4 +3,4 @@ Node-Js Based Admin Panel for Minecraft Servers
 
 # Developers
 - Tom
-- Jason
+- ...
