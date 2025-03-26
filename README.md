@@ -6,6 +6,4 @@ Node-Js Based Admin Panel for Minecraft Servers
 - Danilo
 - Tamer
 - Franky
-- ...
-
 - Jason
