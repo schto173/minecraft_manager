@@ -1,0 +1,28 @@
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    ports:
+      - "25565:25565"
+      - "25575:25575"  # Added RCON port
+    environment:
+      EULA: "TRUE"
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "${RCON_PASSWORD}"
+      ONLINE_MODE: "false"
+    volumes:
+      - ./minecraft-server/data:/data
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      RCON_PASSWORD: "${RCON_PASSWORD}"
+    depends_on:
+      minecraft:        # Changed from minecraft-server to minecraft
+        condition: service_healthy
+    restart: unless-stopped
