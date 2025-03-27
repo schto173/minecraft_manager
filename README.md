@@ -1,131 +1,156 @@
+# Minecraft Server Manager
 
-# Minecraft Server with Node.js RCON Integration
+## Project Goal
+
+Create a web-based management interface for Minecraft servers that allows administrators to monitor player activity, execute commands, and manage server resources through an intuitive dashboard. This project aims to simplify Minecraft server administration for educational environments.
+
+## Timeline
+
+- **Phase 1 (Current)**: Core functionality - Server status, player listing, and basic RCON commands
+- **Phase 2 (April 2025)**: Advanced features - Player management, world backups, and server performance monitoring
+- **Phase 3 (June 2025)**: User management, permissions, and mobile-responsive design
 
 ## Quick Start
 
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/)
+- Git
+
+### Deployment
+
 1. Clone the repository:
    ```bash
-   git clone https://github.com/schto173/minecraft_manager
-   cd minecraft_manager
+   git clone https://github.com/schto173/minecraft-manager.git
+   cd minecraft-server-manager
    ```
 
-2. Edit the RCON password in the `.env` file:
+2. Create an environment file:
    ```bash
-   RCON_PASSWORD=your_secure_password_here
+   cp .env.example .env
    ```
 
-3. Start the services with debugging:
-   ```bash
-   docker compose up
+3. Edit the `.env` file with your Minecraft server details:
    ```
-   later you can use to detatch the running console.
-      ```bash
+   MC_HOST=minecraft
+   MC_PORT=25565
+   RCON_PORT=25575
+   RCON_PASSWORD=your_secure_password
+   ```
+
+4. Start the application with Docker Compose:
+   ```bash
    docker compose up -d
    ```
 
-4. Access the web interface at `http://localhost:3000`.
+5. Access the web interface at `http://localhost:3000`
 
-## How It Works
+### Standalone Deployment (without Docker)
 
-The setup consists of two main services that communicate via RCON:
+1. Install Node.js (v16 or later) and npm
 
-- **Minecraft Server (Port 25565)**:
-  - Uses the `itzg/minecraft-server` Docker image.
-  - RCON is enabled on port `25575`.
-  - World data is stored in the `./minecraft-server/data` directory.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-- **Node.js App (Port 3000)**:
-  - Connects to the Minecraft server via RCON.
-  - Provides a web interface and API endpoints.
-  - Displays player positions and allows sending commands like giving items.
+3. Create and configure the `.env` file as shown above
 
-## API Endpoints
+4. Start the application:
+   ```bash
+   npm start
+   ```
 
-### GET `/api/players`
-- Returns a list of online players and their positions.
-- Also provides server version and player count.
+## Docker Compose Configuration
 
-### POST `/api/give-diamond`
-- Gives a diamond to a specified player.
-- Requires the player's name in the request body:
-  ```json
-  {
-    "playerName": "Player1"
-  }
-  ```
+The included `docker-compose.yml` sets up both the Minecraft server and web application:
+
+```yaml
+version: '3'
+services:
+  minecraft:
+    image: itzg/minecraft-server
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      RCON_PASSWORD: "${RCON_PASSWORD}"
+      ENABLE_RCON: "true"
+    volumes:
+      - ./minecraft-data:/data
+    restart: unless-stopped
+
+  webapp:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - MC_HOST=minecraft
+      - MC_PORT=25565
+      - RCON_PORT=25575
+      - RCON_PASSWORD=${RCON_PASSWORD}
+    depends_on:
+      - minecraft
+    restart: unless-stopped
+```
 
 ## Updating
 
-When new code is pushed to the repository, follow these steps to update:
+To update the application:
 
 1. Pull the latest changes:
    ```bash
    git pull
    ```
 
-2. Rebuild and restart the services:
+2. Rebuild and restart the containers:
    ```bash
    docker compose down
-   docker compose build
    docker compose up -d
    ```
 
-## Stopping
-
-To stop all services, run:
-```bash
-docker compose down
-```
-
 ## Troubleshooting
 
-### If the Node.js app can't connect:
-- Verify that the RCON password in the `.env` file matches the one in the `docker-compose.yml` file.
-- Ensure the Minecraft server is fully started.
-- Check the logs for errors:
-  ```bash
-  docker compose logs -f
-  ```
+### Connection Issues
 
-### If ports are already in use:
-- Change the ports in the `docker-compose.yml` file.
-- Default ports:
-  - `25565` for the Minecraft server.
-  - `3000` for the Node.js app.
+If the web app can't connect to the Minecraft server:
 
+1. Verify the RCON password matches in both environments
+2. Ensure the Minecraft server is fully started
+3. Check logs: `docker compose logs minecraft`
 
-## How to Contribute
+### Port Conflicts
 
-This project allows you to add features to our Minecraft server management application. Follow these steps to contribute your code:
+If you encounter port conflicts:
 
-### Getting Started
+1. Edit the `docker-compose.yml` file to change the exposed ports
+2. Update the `.env` file to match the new ports
 
-1. Fork this repository
-2. Clone your fork: `git clone https://github.com/YOUR-USERNAME/project-name.git`
-3. Install dependencies: `npm install`
-4. Create a feature branch: `git checkout -b feature/your-feature-name`
-
-### Project Structure
-
-- `server.js` - Main Express server
-- `routes/` - API endpoints
-- `services/` - Business logic
-- `static/` - Frontend files
-  - `pages/` - Feature pages (add yours here)
-  - `js/modules/` - JavaScript modules
-
-### Adding Your Feature
-
-1. Create a new HTML page in `static/pages/your-feature.html`
-2. Add JavaScript in `static/js/modules/your-feature.js`
-3. If needed, create API endpoints in `routes/your-feature.js`
-
-### Submitting Your Code
-
-1. Test your changes locally
-2. Commit with a descriptive message
-3. Push to your fork: `git push origin feature/your-feature-name`
-4. Create a pull request
-
+## Project Structure
 
 ```
+minecraft-server-manager/
+├── server.js              # Main application entry point
+├── routes/                # API endpoint definitions
+├── services/              # Business logic modules
+├── config.js              # Configuration settings
+├── static/                # Frontend assets
+├── Dockerfile             # Docker build instructions
+├── docker-compose.yml     # Docker Compose configuration
+├── .env.example           # Environment variables template
+└── package.json           # Project dependencies
+```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed information on how to contribute to this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [minecraft-server-util](https://github.com/PassTheMayo/minecraft-server-util) for server status queries
+- [rcon-client](https://github.com/janispritzkau/rcon-client) for RCON communication
+- [itzg/minecraft-server](https://github.com/itzg/docker-minecraft-server) for the Minecraft server Docker image
