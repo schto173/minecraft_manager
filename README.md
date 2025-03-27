@@ -93,20 +93,6 @@ docker compose down
   - `25565` for the Minecraft server.
   - `3000` for the Node.js app.
 
-## File Structure
-
-```
-minecraft-nodejs-project/
-├── docker-compose.yml     # Service configuration
-├── .env                   # RCON password
-├── web/         
-│   ├── Dockerfile         # Dockerfile for Node.js app
-│   ├── src/            
-│   │   └── app.js       # Main server code
-│   └── public/            # Web interface
-└── minecraft-server/   
-    └── data/              # World data
-```
 
 ## How to Contribute
 
