@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path'); 
 const util = require('minecraft-server-util');
 const { Rcon } = require('rcon-client');
 const app = express();
@@ -13,6 +14,7 @@ const serverRoutes = require('./routes/minecraft');
 
 // Register routes
 app.use('/api/minecraft', serverRoutes);
+
 
 // Start server
 app.listen(port, () => {

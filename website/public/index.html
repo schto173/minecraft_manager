@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Server Manager</title>
+  <link rel="stylesheet" href="style/main.css">
+</head>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <div class="sidebar-header">
+          <h3>Minecraft Panel</h3>
+          <button class="sidebar-toggle">
+              <i class="fas fa-bars"></i>
+          </button>
+      </div>
+      <nav class="sidebar-nav">
+          <div class="nav-category">Navigation</div>
+          <ul>
+              <li><a href="/" class="active" data-title="Home"><i class="icon fas fa-home"></i><span>Home</span></a></li>
+              <li><a href="/commands.html"  data-title="Commands"><i class="icon fas fa-terminal"></i><span>Commands</span></a></li>
+              <li><a href="/example.html" data-title="Example"><i class="icon fas fa-feather-pointed"></i><span>Example</span></a></li>
+            </ul>
+      </nav>
+      <div class="sidebar-footer">
+          <a href="#" id="toggleTheme">
+              <i class="icon fas fa-moon"></i>
+              <span>Toggle Theme</span>
+          </a>
+      </div>
+  </div>
+    
+    <div class="main-content">
+      <header>
+        <h1>Minecraft Server Status</h1>
+      </header>
+      
+      <main>
+        <section id="server-stats">
+          <h2>Server Status</h2>
+          <div id="status-container">
+            <p>Loading server status...</p>
+          </div>
+        </section>
+        
+        <section id="player-list">
+          <h2>Online Players</h2>
+          <ul id="players-container">
+            <li>Loading players...</li>
+          </ul>
+        </section>
+      </main>
+      
+      <footer>
+        <p>Minecraft Server Management App</p>
+      </footer>
+    </div>
+  </div>
+  <script src="https://kit.fontawesome.com/3aade58b83.js" crossorigin="anonymous"></script>
+  <script src="/scripts/server-status.js"></script>
+</body>
+</html>

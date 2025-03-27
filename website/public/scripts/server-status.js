@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch server status
     async function fetchServerStatus() {
       try {
-        const response = await fetch('/api/server/status');
+        const response = await fetch('/api/minecraft/status');
         const data = await response.json();
         
         // Update server stats

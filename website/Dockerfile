@@ -1,6 +1,6 @@
 FROM node:lts
 
-WORKDIR /app
+WORKDIR /
 
 # Install dependencies first (better caching)
 COPY package*.json ./
