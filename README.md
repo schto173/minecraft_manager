@@ -106,7 +106,7 @@ minecraft-nodejs-project/
 │   └── public/            # Web interface
 └── minecraft-server/   
     └── data/              # World data
-
+```
 
 ## How to Contribute
 
@@ -141,5 +141,5 @@ This project allows you to add features to our Minecraft server management appli
 3. Push to your fork: `git push origin feature/your-feature-name`
 4. Create a pull request
 
-```
+
 ```
