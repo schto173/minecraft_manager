@@ -22,7 +22,7 @@ Create a web-based management interface for Minecraft servers that allows admini
 1. Clone the repository:
    ```bash
    git clone https://github.com/schto173/minecraft-manager.git
-   cd minecraft-server-manager
+   cd minecraft-manager
    ```
 
 2. Create an environment file:
@@ -129,16 +129,10 @@ If you encounter port conflicts:
 ## Project Structure
 
 ```
-minecraft-server-manager/
-├── server.js              # Main application entry point
-├── routes/                # API endpoint definitions
-├── services/              # Business logic modules
-├── config.js              # Configuration settings
-├── static/                # Frontend assets
-├── Dockerfile             # Docker build instructions
+minecraft-manager/
+├── website                # Code for Website deployment
 ├── docker-compose.yml     # Docker Compose configuration
-├── .env.example           # Environment variables template
-└── package.json           # Project dependencies
+└── .env.example           # Environment variables template
 ```
 
 ## Contributing
