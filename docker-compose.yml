@@ -12,7 +12,7 @@ services:
     volumes:
       - ./minecraft-server/data:/data
     restart: unless-stopped
-
+ 
   web:
     build:
       context: ./website
